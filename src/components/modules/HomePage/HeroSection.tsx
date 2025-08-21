@@ -1,4 +1,4 @@
-import TravelLogin from "@/assets/images/travel-login.jpg";
+import BannerImg from "@/assets/images/BannerImg.jpg";
 import { Link } from "react-router";
 
 export const HeroSection = () => {
@@ -7,8 +7,8 @@ export const HeroSection = () => {
       <section className="container mx-auto px-4 py-16 md:grid md:grid-cols-2 md:items-center md:gap-4 ">
         <div className="max-w-prose text-left">
           <h1 className="text-4xl font-extrabold text-foreground  sm:text-5xl dark:text-white">
-            Let's go with Amazing Tours and
-            <strong className="text-primary"> discover </strong>a place
+            Fast, Secure digital
+            <strong className="text-primary"> wallet </strong>payments
           </h1>
 
           <p className="mt-4 text-base text-pretty text-gray-700 sm:text-lg/relaxed dark:text-gray-200">
@@ -36,15 +36,9 @@ export const HeroSection = () => {
 
         <div className="mx-auto hidden text-gray-900 md:block dark:text-white relative">
           <img
-            src={TravelLogin}
+            src={BannerImg}
             alt="Placeholder"
             className="w-full object-center object-cover rounded-md shadow-lg"
-          />
-
-          <img
-            src={TravelLogin}
-            alt="Placeholder"
-            className="w-full opacity-5 bg-blend-overlay rounded-md  absolute top-5 left-5 mb-4 "
           />
         </div>
       </section>
