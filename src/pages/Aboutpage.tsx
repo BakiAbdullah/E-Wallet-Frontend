@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import BannerImg from "@/assets/images/BannerImg.jpg";
 import BannerImg2 from "@/assets/images/BannerImg2.jpg";
 import { Logo } from "@/assets/icons/Logo";
+import { Team } from "@/components/modules/About/Team";
 
 interface About3Props {
   title?: string;
@@ -35,32 +36,7 @@ interface About3Props {
   }>;
 }
 
-const defaultCompanies = [
-  {
-    src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/company/fictional-company-logo-1.svg",
-    alt: "Arc",
-  },
-  {
-    src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/company/fictional-company-logo-2.svg",
-    alt: "Descript",
-  },
-  {
-    src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/company/fictional-company-logo-3.svg",
-    alt: "Mercury",
-  },
-  {
-    src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/company/fictional-company-logo-4.svg",
-    alt: "Ramp",
-  },
-  {
-    src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/company/fictional-company-logo-5.svg",
-    alt: "Retool",
-  },
-  {
-    src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/company/fictional-company-logo-6.svg",
-    alt: "Watershed",
-  },
-];
+
 
 const defaultAchievements = [
   { label: "Companies Supported", value: "300+" },
@@ -88,8 +64,8 @@ export const Aboutpage = ({
     buttonText: "Create Free Account",
     buttonUrl: "https://shadcnblocks.com",
   },
-  companiesTitle = "Valued by clients worldwide",
-  companies = defaultCompanies,
+  
+
   achievementsTitle = "Our Achievements in Numbers",
   achievementsDescription = "Providing businesses with effective tools to improve workflows, boost efficiency, and encourage growth.",
   achievements = defaultAchievements,
@@ -107,7 +83,7 @@ export const Aboutpage = ({
           <h1 className="text-5xl font-semibold text-gray-900 dark:text-white">
             {title}
           </h1>
-          <p className="text-gray-700 dark:text-gray-300">{description}</p>
+          <p className="text-gray-700 italic dark:text-gray-300">"{description}"</p>
         </motion.div>
 
         {/* Main Section */}
@@ -159,32 +135,20 @@ export const Aboutpage = ({
           </div>
         </div>
 
-        {/* Partners */}
+        {/* Our Team */}
         <motion.div
-          className="py-32 text-center"
+          className="py-20 text-center"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 1.8 }}
           viewport={{ once: true }}
         >
-          <p className="text-xl font-semibold text-gray-900 dark:text-white">
-            {companiesTitle}
-          </p>
-          <div className="mt-8 flex flex-wrap justify-center gap-8">
-            {companies.map((company, idx) => (
-              <img
-                key={idx}
-                src={company.src}
-                alt={company.alt}
-                className="h-10 w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300"
-              />
-            ))}
-          </div>
+        <Team/>
         </motion.div>
 
         {/* Achievements */}
         <motion.div
-          className="relative overflow-hidden rounded-xl bg-white dark:bg-gray-800 p-10 md:p-16 shadow-lg"
+          className="relative overflow-hidden rounded-xl bg-white dark:bg-gray-800 p-10 md:p-20 shadow-lg"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.9 }}

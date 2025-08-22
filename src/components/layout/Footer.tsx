@@ -138,8 +138,6 @@ export const Footer = () => {
               <p className="font-medium text-muted-foreground">Services</p>
 
               <ul className="mt-6 space-y-4 text-sm">
-                
-
                 <li>
                   <Link
                     to="#"
@@ -187,7 +185,6 @@ export const Footer = () => {
 
               <ul className="mt-6 space-y-4 text-sm">
                 <li>
-                  
                   <Link
                     to="/about"
                     className="text-muted-foreground transition hover:opacity-75"
@@ -224,7 +221,6 @@ export const Footer = () => {
 
               <ul className="mt-6 space-y-4 text-sm">
                 <li>
-                
                   <Link
                     to="/contact"
                     className="text-muted-foreground transition hover:opacity-75"
@@ -235,7 +231,6 @@ export const Footer = () => {
                 </li>
 
                 <li>
-                  
                   <Link
                     to="/faq"
                     className="text-muted-foreground transition hover:opacity-75"

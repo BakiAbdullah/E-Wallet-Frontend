@@ -13,9 +13,10 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Coins, HouseIcon, InboxIcon, LayoutDashboard, SquareUser } from "lucide-react";
-import { ThemeToggle } from "./theme-toggle";
+import { Coins, HouseIcon, InboxIcon, LayoutDashboard, SquareUser, TurkishLiraIcon } from "lucide-react";
 import { Link } from "react-router";
+import { Badge } from "../ui/badge";
+import { ThemeToggle } from "./theme-toggle";
 
 // Navigation links array to be used in both desktop and mobile menus
 const navigationLinks = [
@@ -30,7 +31,7 @@ export default function Component() {
 
 
   return (
-    <header className="border-b px-4 md:px-10">
+    <header className="border-b px-4 md:px-10 sticky top-0 z-40 bg-background/80 backdrop-blur-xs">
       <div className="flex h-16 items-center justify-between gap-4">
         {/* Left side */}
         <div className="flex flex-1 items-center gap-2">
@@ -141,8 +142,20 @@ export default function Component() {
           </div>
 
           {/* User Image */}
-          <div className="relative h-8 w-8 ms-4 rounded-full overflow-hidden">
-            <img src={ProfileImg} alt="" />
+
+          <div className="flex items-center justify-center space-x-2 ps-2">
+            <Badge
+              variant="secondary"
+              className="bg-primary h-5 flex items-center justify-center text-white relative"
+            >
+              <TurkishLiraIcon />
+
+              <span className="text-xs">200.77</span>
+            </Badge>
+
+            <div className="relative h-8 w-8 rounded-full overflow-hidden">
+              <img src={ProfileImg} alt="" />
+            </div>
           </div>
         </div>
       </div>

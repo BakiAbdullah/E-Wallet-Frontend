@@ -63,7 +63,7 @@ export const Features = ({
   ],
 }: Feature17Props) => {
   return (
-    <section className="py-32">
+    <section className="py-32 bg-gray-50 dark:bg-gray-900">
       <div className="container mx-auto max-w-7xl px-4">
         <motion.p
           className="mb-4 text-xs text-muted-foreground md:pl-5"
@@ -95,7 +95,7 @@ export const Features = ({
               transition={{ duration: 0.8, delay: 0.1 * idx }}
               viewport={{ once: true }}
             >
-              <span className="mb-8 flex h-10 w-10 md:h-12 md:w-12 shrink-0 items-center justify-center rounded-full bg-accent">
+              <span className="mb-8 flex h-10 w-10 md:h-12 md:w-12 shrink-0 items-center justify-center rounded-full bg-primary text-white">
                 {feature.icon}
               </span>
               <div>
