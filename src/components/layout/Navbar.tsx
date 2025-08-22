@@ -12,10 +12,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import {
-  authApi,
-  useLogoutMutation,
-} from "@/redux/features/auth/auth.api";
+import { authApi, useLogoutMutation } from "@/redux/features/auth/auth.api";
 import { useAppDispatch } from "@/redux/hooks";
 import {
   Coins,
@@ -30,14 +27,21 @@ import { Badge } from "../ui/badge";
 import { ThemeToggle } from "./theme-toggle";
 import { useGetMyWalletQuery } from "@/redux/features/wallet/wallet.api";
 import { useGetUserProfileQuery } from "@/redux/features/user/user.api";
+import { role } from "@/constants/role";
 
 // Navigation links array to be used in both desktop and mobile menus
 const navigationLinks = [
-  { href: "/", label: "Home", icon: HouseIcon, active: true },
-  { href: "/about", label: "About", icon: SquareUser },
-  { href: "/features", label: "Features", icon: InboxIcon },
-  { href: "/pricing", label: "Pricing", icon: Coins },
-  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/", label: "Home", icon: HouseIcon, role: "PUBLIC" },
+  { href: "/about", label: "About", icon: SquareUser, role: "PUBLIC" },
+  { href: "/features", label: "Features", icon: InboxIcon, role: "PUBLIC" },
+  { href: "/pricing", label: "Pricing", icon: Coins, role: "PUBLIC" },
+  {
+    href: "/admin",
+    label: "Dashboard",
+    icon: LayoutDashboard,
+    role: role.ADMIN,
+  },
+  { href: "/user", label: "Dashboard", icon: LayoutDashboard, role: role.USER },
 ];
 
 export default function Navbar() {
@@ -46,7 +50,6 @@ export default function Navbar() {
   const walletBalance = walletData?.data?.balance || 0;
   const [logout] = useLogoutMutation();
   const dispatch = useAppDispatch();
-
 
   const handleLogout = () => {
     logout(undefined);
@@ -104,7 +107,6 @@ export default function Navbar() {
                         <NavigationMenuLink
                           href={link.href}
                           className="flex-row items-center gap-2 py-1.5"
-                          active={link.active}
                         >
                           <Icon
                             size={16}
@@ -135,20 +137,38 @@ export default function Navbar() {
             {navigationLinks.map((link, index) => {
               const Icon = link.icon;
               return (
-                <NavigationMenuItem key={index}>
-                  <NavigationMenuLink
-                    active={link.active}
-                    href={link.href}
-                    className="text-foreground hover:text-primary flex-row items-center gap-2 py-1.5 font-medium"
-                  >
-                    <Icon
-                      size={16}
-                      className="text-muted-foreground/80"
-                      aria-hidden="true"
-                    />
-                    <span>{link.label}</span>
-                  </NavigationMenuLink>
-                </NavigationMenuItem>
+                <>
+                  {link.role === "PUBLIC" && (
+                    <NavigationMenuItem key={index}>
+                      <NavigationMenuLink
+                        href={link.href}
+                        className="text-foreground hover:text-primary flex-row items-center gap-2 py-1.5 font-medium"
+                      >
+                        <Icon
+                          size={16}
+                          className="text-muted-foreground/80"
+                          aria-hidden="true"
+                        />
+                        <span>{link.label}</span>
+                      </NavigationMenuLink>
+                    </NavigationMenuItem>
+                  )}
+                  {link.role === data?.data?.role && (
+                    <NavigationMenuItem key={index}>
+                      <NavigationMenuLink
+                        href={link.href}
+                        className="text-foreground hover:text-primary flex-row items-center gap-2 py-1.5 font-medium"
+                      >
+                        <Icon
+                          size={16}
+                          className="text-muted-foreground/80"
+                          aria-hidden="true"
+                        />
+                        <span>{link.label}</span>
+                      </NavigationMenuLink>
+                    </NavigationMenuItem>
+                  )}
+                </>
               );
             })}
           </NavigationMenuList>
@@ -162,7 +182,6 @@ export default function Navbar() {
           <div className="flex items-center gap-4">
             {data?.data?.email ? (
               <Button
-                
                 onClick={handleLogout}
                 variant="outline"
                 size="sm"

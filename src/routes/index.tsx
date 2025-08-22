@@ -1,4 +1,5 @@
 import App from "@/App";
+import DashboardLayout from "@/components/layout/DashboardLayout";
 import { Aboutpage } from "@/pages/Aboutpage";
 import { Contactpage } from "@/pages/Contactpage";
 import { Faq } from "@/pages/Faq";
@@ -6,7 +7,10 @@ import { Features } from "@/pages/Features";
 import { Homepage } from "@/pages/Homepage";
 import Login from "@/pages/Login";
 import { Pricing } from "@/pages/Pricing";
-import { createBrowserRouter } from "react-router";
+import { generateRoutes } from "@/utils/generateRoutes";
+import { createBrowserRouter, Navigate } from "react-router";
+import { adminSidebarRoutes } from "./adminSidebarRoutes";
+import { userSidebarRoutes } from "./userSidebarRoutes";
 
 export const router = createBrowserRouter([
   {
@@ -49,4 +53,23 @@ export const router = createBrowserRouter([
   //   Component: Register,
   //   path: "register",
   // },
+
+  // Admin Routes (Dashboard)
+  {
+    Component: DashboardLayout,
+    path: "/admin",
+    children: [
+      { index: true, element: <Navigate to="/admin/analytics" /> },
+      ...generateRoutes(adminSidebarRoutes),
+    ],
+  },
+  // User Routes (Dashboard)
+  {
+    Component: DashboardLayout,
+    path: "/user",
+    children: [
+      { index: true, element: <Navigate to="/user/transaction" /> },
+      ...generateRoutes(userSidebarRoutes),
+    ],
+  },
 ]);
