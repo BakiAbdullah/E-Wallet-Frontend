@@ -14,7 +14,6 @@ import {
 } from "@/components/ui/popover";
 import {
   authApi,
-  useGetUserProfileQuery,
   useLogoutMutation,
 } from "@/redux/features/auth/auth.api";
 import { useAppDispatch } from "@/redux/hooks";
@@ -30,6 +29,7 @@ import { Link } from "react-router";
 import { Badge } from "../ui/badge";
 import { ThemeToggle } from "./theme-toggle";
 import { useGetMyWalletQuery } from "@/redux/features/wallet/wallet.api";
+import { useGetUserProfileQuery } from "@/redux/features/user/user.api";
 
 // Navigation links array to be used in both desktop and mobile menus
 const navigationLinks = [
@@ -162,10 +162,11 @@ export default function Navbar() {
           <div className="flex items-center gap-4">
             {data?.data?.email ? (
               <Button
+                
                 onClick={handleLogout}
                 variant="outline"
                 size="sm"
-                className="text-sm text-white cursor-pointer"
+                className="text-sm cursor-pointer"
               >
                 Logout
               </Button>
