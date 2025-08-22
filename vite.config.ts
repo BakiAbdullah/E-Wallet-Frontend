@@ -11,4 +11,8 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  // Define the base path for the application
+  // server: {
+  //   port: 3000,
+  // }
 });

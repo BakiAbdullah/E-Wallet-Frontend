@@ -10,12 +10,12 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import PasswordInput from "@/components/ui/PasswordInput";
-import config from "@/config";
 import { cn } from "@/lib/utils";
 import { useLoginMutation } from "@/redux/features/auth/auth.api";
 import { useForm, type FieldValues, type SubmitHandler } from "react-hook-form";
 import { Link, useNavigate } from "react-router";
 import { toast } from "sonner";
+
 
 export function LoginForm({
   className,
@@ -24,28 +24,29 @@ export function LoginForm({
   const form = useForm();
   const navigate = useNavigate();
   const [login] = useLoginMutation();
-
+  
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    const toastId = toast.loading("Logging in...");
     try {
       const credentials = {
         email: data.email,
         password: data.password,
       };
       const res = await login(credentials).unwrap();
-
-      toast.success("User login successful!");
-      navigate("/");
-
-      console.log({ res });
+      
+      if (res?.success) {
+        toast.success("Logged in successfully!", { id: toastId });
+        navigate("/");
+      }
     } catch (error: any) {
       console.error(error);
       if (error.data.message === "Password does not match!") {
-        toast.error("Invalid Credentials!");
+        toast.error("Invalid Credentials!", { id: toastId });
       }
-      if (error.data.message === "User is not verified!") {
-        toast.error("User is not verified!");
-        navigate("/verify", { state: data.email });
-      }
+      // if (error.data.message === "User is not verified!") {
+      //   toast.error("User is not verified!");
+      //   // navigate("/verify", { state: data.email });
+      // }
       // if (error.status === 401) {
       //   toast.error("Your account is not verified!");
       //   navigate("/verify", { state: data.email});
@@ -89,6 +90,7 @@ export function LoginForm({
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
+                    {/* This component is for show / hide password fields */}
                     <PasswordInput {...field} />
                     {/* <Input
                       type="password"
@@ -102,7 +104,7 @@ export function LoginForm({
               )}
             />
 
-            <Button type="submit" className="w-full cursor-pointer">
+            <Button type="submit" className="w-full text-white cursor-pointer">
               Login
             </Button>
           </form>
@@ -114,14 +116,14 @@ export function LoginForm({
           </span>
         </div>
 
-        <Button
+        {/* <Button
           onClick={() => window.open(`${config.BASE_URL}/auth/google`)}
           type="button"
           variant="outline"
           className="w-full cursor-pointer"
         >
           Login with Google
-        </Button>
+        </Button> */}
       </div>
       <div className="text-center text-sm">
         Don&apos;t have an account?{" "}

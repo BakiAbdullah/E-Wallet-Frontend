@@ -3,7 +3,8 @@ import axios, { type AxiosRequestConfig } from "axios";
 
 export const axiosInstance = axios.create({
   baseURL: config.BASE_URL,
-  withCredentials: true, // It will set Cookie in browser
+  withCredentials: true,
+  // It will set Cookie in browser
 });
 
 // Add a request interceptor

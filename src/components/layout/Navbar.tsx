@@ -1,4 +1,3 @@
-
 import { Logo } from "@/assets/icons/Logo";
 import ProfileImg from "@/assets/images/profile.jpg";
 import { Button } from "@/components/ui/button";
@@ -13,22 +12,47 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Coins, HouseIcon, InboxIcon, LayoutDashboard, SquareUser, TurkishLiraIcon } from "lucide-react";
+import {
+  authApi,
+  useGetUserProfileQuery,
+  useLogoutMutation,
+} from "@/redux/features/auth/auth.api";
+import { useAppDispatch } from "@/redux/hooks";
+import {
+  Coins,
+  HouseIcon,
+  InboxIcon,
+  LayoutDashboard,
+  SquareUser,
+  TurkishLiraIcon,
+} from "lucide-react";
 import { Link } from "react-router";
 import { Badge } from "../ui/badge";
 import { ThemeToggle } from "./theme-toggle";
+import { useGetMyWalletQuery } from "@/redux/features/wallet/wallet.api";
 
 // Navigation links array to be used in both desktop and mobile menus
 const navigationLinks = [
   { href: "/", label: "Home", icon: HouseIcon, active: true },
-  { href: "/about", label: "About", icon: SquareUser},
+  { href: "/about", label: "About", icon: SquareUser },
   { href: "/features", label: "Features", icon: InboxIcon },
   { href: "/pricing", label: "Pricing", icon: Coins },
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
 ];
 
-export default function Component() {
+export default function Navbar() {
+  const { data } = useGetUserProfileQuery(undefined);
+  const { data: walletData } = useGetMyWalletQuery(undefined);
+  const walletBalance = walletData?.data?.balance || 0;
+  const [logout] = useLogoutMutation();
+  const dispatch = useAppDispatch();
 
+
+  const handleLogout = () => {
+    logout(undefined);
+    dispatch(authApi.util.resetApiState()); // It will reset the auth state, so that acts like refetch
+    window.location.href = "/login"; // Redirect to login page after logout
+  };
 
   return (
     <header className="border-b px-4 md:px-10 sticky top-0 z-40 bg-background/80 backdrop-blur-xs">
@@ -135,10 +159,25 @@ export default function Component() {
           {/* Theme toggle */}
           <ThemeToggle />
           {/* Login & Logout */}
-          <div>
-            <Button className="cursor-pointer" size="sm" variant="outline">
-              Login
-            </Button>
+          <div className="flex items-center gap-4">
+            {data?.data?.email ? (
+              <Button
+                onClick={handleLogout}
+                variant="outline"
+                size="sm"
+                className="text-sm text-white cursor-pointer"
+              >
+                Logout
+              </Button>
+            ) : (
+              <Button
+                asChild
+                size="sm"
+                className="text-sm text-white cursor-pointer"
+              >
+                <Link to="/login">Login</Link>
+              </Button>
+            )}
           </div>
 
           {/* User Image */}
@@ -149,12 +188,20 @@ export default function Component() {
               className="bg-primary h-5 flex items-center justify-center text-white relative"
             >
               <TurkishLiraIcon />
-
-              <span className="text-xs">200.77</span>
+              <span className="text-xs">{walletBalance}</span>
             </Badge>
 
-            <div className="relative h-8 w-8 rounded-full overflow-hidden">
-              <img src={ProfileImg} alt="" />
+            <div className="relative h-8 w-8 object-fill rounded-full overflow-hidden">
+              {/* {data?.data?.avatar ? (
+                <img src={data.data.avatar} alt="User Avatar" />
+              ) : (
+                <img src={ProfileImg} alt="Default Avatar" />
+              )} */}
+              <img
+                src={data?.data?.avatar || ProfileImg}
+                alt="User Avatar"
+                className="h-full w-full object-cover"
+              />
             </div>
           </div>
         </div>
