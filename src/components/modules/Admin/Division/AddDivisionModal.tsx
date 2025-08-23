@@ -20,13 +20,12 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { useAddDivisionMutation } from "@/redux/features/division/division.api";
 import { useState } from "react";
 import { useForm, type FieldValues } from "react-hook-form";
 import { toast } from "sonner";
 
 export function AddDivisionModal() {
-  const [addDivision] = useAddDivisionMutation();
+  // const [addDivision] = useAddDivisionMutation();
   const [image, setImage] = useState<File | null>(null);
   const [open, setOpen] = useState(false); // Modal open state
 

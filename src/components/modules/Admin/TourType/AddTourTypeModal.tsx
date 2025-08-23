@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -17,22 +18,20 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useAddTourTypeMutation } from "@/redux/features/tour/tour.api";
 import { useForm, type FieldValues } from "react-hook-form";
-import { toast } from "sonner";
 
 export function AddTourTypeModal() {
-  const [addTourType] = useAddTourTypeMutation();
+  // const [addTourType] = useAddTourTypeMutation();
 
   const form = useForm();
 
   const onSubmit = async (data: FieldValues) => {
-    const res = await addTourType(data).unwrap();
-    console.log(res)
-    if (res.success) {
-      toast.success("Tour type added successfully!");
-    }
-    form.reset();
+    // const res = await addTourType(data).unwrap();
+    // console.log(res)
+    // if (res.success) {
+    //   toast.success("Tour type added successfully!");
+    // }
+    // form.reset();
     
   };
 

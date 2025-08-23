@@ -2,6 +2,20 @@ import { baseApi } from "@/redux/baseApi";
 
 export const userApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
+    // Register User and Agent via Dynamic endpoints based on roles
+    register: builder.mutation({
+      query: ({ role, ...payload }) => {
+        const url =
+          role === "AGENT" ? "/user/register-agent" : "/user/register";
+
+        return {
+          url,
+          method: "POST",
+          data: payload,
+        };
+      },
+    }),
+
     // Get all users
     getAllUsers: builder.query({
       query: () => ({
@@ -32,6 +46,7 @@ export const userApi = baseApi.injectEndpoints({
 });
 
 export const {
+  useRegisterMutation,
   useGetUserProfileQuery,
   useGetAllAgentsQuery,
   useGetAllUsersQuery,

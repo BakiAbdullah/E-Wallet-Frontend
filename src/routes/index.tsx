@@ -11,6 +11,8 @@ import { generateRoutes } from "@/utils/generateRoutes";
 import { createBrowserRouter, Navigate } from "react-router";
 import { adminSidebarRoutes } from "./adminSidebarRoutes";
 import { userSidebarRoutes } from "./userSidebarRoutes";
+import RegisterPage from "@/pages/RegisterPage";
+import { agentSidebarRoutes } from "./agentSidebarRoutes";
 
 export const router = createBrowserRouter([
   {
@@ -49,10 +51,10 @@ export const router = createBrowserRouter([
     Component: Login,
     path: "login",
   },
-  // {
-  //   Component: Register,
-  //   path: "register",
-  // },
+  {
+    Component: RegisterPage,
+    path: "register",
+  },
 
   // Admin Routes (Dashboard)
   {
@@ -70,6 +72,15 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <Navigate to="/user/transaction" /> },
       ...generateRoutes(userSidebarRoutes),
+    ],
+  },
+  // Agent Routes (Dashboard)
+  {
+    Component: DashboardLayout,
+    path: "/agent",
+    children: [
+      { index: true, element: <Navigate to="/agent/transaction" /> },
+      ...generateRoutes(agentSidebarRoutes),
     ],
   },
 ]);

@@ -42,6 +42,7 @@ const navigationLinks = [
     role: role.ADMIN,
   },
   { href: "/user", label: "Dashboard", icon: LayoutDashboard, role: role.USER },
+  { href: "/agent", label: "Dashboard", icon: LayoutDashboard, role: role.AGENT },
 ];
 
 export default function Navbar() {

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -9,15 +10,23 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import PasswordInput from "@/components/ui/PasswordInput";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { role } from "@/constants/role";
 import { cn } from "@/lib/utils";
+import { useRegisterMutation } from "@/redux/features/user/user.api";
+import { registerSchema } from "@/types/registerSchema";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { Link, useNavigate } from "react-router";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { registerSchema } from "@/types/registerSchema";
-import PasswordInput from "@/components/ui/PasswordInput";
-import { useRegisterMutation } from "@/redux/features/auth/auth.api";
 import { toast } from "sonner";
+import { z } from "zod";
 
 export function RegisterForm({
   className,
@@ -26,36 +35,44 @@ export function RegisterForm({
   const [register] = useRegisterMutation();
   const navigate = useNavigate();
 
-
   // Initialize the form with react-hook-form and Zod validation
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
-      name: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
+      name: "User",
+      email: "ab@gmail.com",
+      password: "Bk@12345",
+      role: role.USER,
+      confirmPassword: "Bk@12345",
+      phone: "01234567890",
+      address: "123 Main St",
     },
   });
-
 
   // Handle form submission
   const onSubmit: SubmitHandler<z.infer<typeof registerSchema>> = async (
     data
   ) => {
+    const toastId = toast.loading("Please wait...");
     const userInfo = {
       name: data.name,
       email: data.email,
+      role: data.role,
       password: data.password,
+      phone: data.phone,
+      address: data.address,
+      commissionRate: 3
     };
 
+    console.log(data)
     try {
       const result = await register(userInfo).unwrap();
       console.log(result)
-      toast.success("User registration successful!");
-      navigate("/verify");
+      toast.success("User registration successful!", {id: toastId});
+      navigate("/login");
       form.reset();
-    } catch (error) {
+    } catch (error: any) {
+      toast.error(`${error.data?.message}`, {id: toastId});
       console.log(error);
     }
   };
@@ -72,6 +89,7 @@ export function RegisterForm({
       <div className="grid gap-6">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            {/* Name */}
             <FormField
               control={form.control}
               name="name"
@@ -88,6 +106,7 @@ export function RegisterForm({
                 </FormItem>
               )}
             />
+            {/* Email */}
             <FormField
               control={form.control}
               name="email"
@@ -108,6 +127,32 @@ export function RegisterForm({
                 </FormItem>
               )}
             />
+            {/* Role Select */}
+            <FormField
+              control={form.control}
+              name="role"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Register as</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a role" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="USER">{ role.USER }</SelectItem>
+                      <SelectItem value="AGENT">{ role.AGENT }</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            {/* Password */}
             <FormField
               control={form.control}
               name="password"
@@ -115,12 +160,6 @@ export function RegisterForm({
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    {/* <Input
-                      placeholder="*********"
-                      type="password"
-                      {...field}
-                    /> */}
-
                     <PasswordInput {...field} />
                   </FormControl>
                   <FormDescription className="sr-only">
@@ -147,7 +186,42 @@ export function RegisterForm({
               )}
             />
 
-            <Button type="submit" className="w-full">
+            {/* Phone */}
+            <FormField
+              control={form.control}
+              name="phone"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Phone</FormLabel>
+                  <FormControl>
+                    <Input placeholder="John Doe" {...field} />
+                  </FormControl>
+                  <FormDescription className="sr-only">
+                    This is your public display name.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            {/* Address */}
+            <FormField
+              control={form.control}
+              name="address"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Address</FormLabel>
+                  <FormControl>
+                    <Input placeholder="John Doe" {...field} />
+                  </FormControl>
+                  <FormDescription className="sr-only">
+                    This is your public display name.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <Button type="submit" className="w-full text-white cursor-pointer">
               Submit
             </Button>
           </form>
