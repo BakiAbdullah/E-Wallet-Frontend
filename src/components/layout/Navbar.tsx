@@ -54,7 +54,7 @@ export default function Navbar() {
 
   const handleLogout = () => {
     logout(undefined);
-    dispatch(authApi.util.resetApiState()); // It will reset the auth state, so that acts like refetch
+    dispatch(authApi.util.resetApiState()); // It will reset the auth state, and will acts like a refetch
     window.location.href = "/login"; // Redirect to login page after logout
   };
 

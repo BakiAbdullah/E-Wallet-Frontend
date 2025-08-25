@@ -1,10 +1,16 @@
 import { AddMoneyPage } from "@/pages/AddMoneyPage";
-import { AdminWalletPage } from "@/pages/AdminWalletPage";
+import { MyProfilePage } from "@/pages/MyProfilePage";
+import { MyWalletPage } from "@/pages/MyWalletPage";
 import { SendMoneyPage } from "@/pages/SendMoneyPage";
 import { MyTransactionTable } from "@/pages/User/MyTransactionTable";
 import { WithdrawMoneyPage } from "@/pages/WithdrawMoneyPage";
 import type { ISidebarItem } from "@/types";
-import { History, Wallet, WalletMinimal } from "lucide-react";
+import {
+  History,
+  Settings2Icon,
+  Wallet,
+  WalletMinimal
+} from "lucide-react";
 
 export const userSidebarRoutes: ISidebarItem[] = [
   {
@@ -24,17 +30,17 @@ export const userSidebarRoutes: ISidebarItem[] = [
     items: [
       {
         title: "Add Money",
-        url: "user/wallet/top-up",
+        url: "wallet/top-up",
         component: AddMoneyPage,
       },
       {
         title: "Withdraw Money",
-        url: "user/wallet/withdraw",
+        url: "wallet/withdraw",
         component: WithdrawMoneyPage,
       },
       {
         title: "Send Money",
-        url: "user/wallet/send-money",
+        url: "wallet/send-money",
         component: SendMoneyPage,
       },
     ],
@@ -46,7 +52,18 @@ export const userSidebarRoutes: ISidebarItem[] = [
       {
         title: "My Wallet",
         url: "user/wallet",
-        component: AdminWalletPage,
+        component: MyWalletPage,
+      },
+    ],
+  },
+  {
+    title: "Profile Management",
+    icon: Settings2Icon,
+    items: [
+      {
+        title: "My Account",
+        url: "user/profile",
+        component: MyProfilePage,
       },
     ],
   },

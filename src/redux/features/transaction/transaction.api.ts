@@ -15,9 +15,10 @@ export const transactionApi = baseApi.injectEndpoints({
       }),
     }),
     getSingleUserTransactions: builder.query({
-      query: (walletId) => ({
-        url: `/transaction/history/${walletId}`,
+      query: ({walletId, ...rest}) => ({
+        url: `/transaction/history/user/${walletId}`,
         method: "GET",
+        params: rest,
       }),
     }),
   }),

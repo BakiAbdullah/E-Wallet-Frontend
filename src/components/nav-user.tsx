@@ -61,7 +61,7 @@ export function NavUser({
                   {user.email}
                 </span>
               </div>
-              <Ellipsis className="ml-auto size-4" />
+              <Ellipsis className="ml-auto size-4 cursor-pointer" />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent
@@ -104,9 +104,9 @@ export function NavUser({
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem className="cursor-pointer" onClick={handleLogout}>
               <LogOut />
-              <Link to="" onClick={handleLogout}>Log Out</Link>
+              <Link to="">Log Out</Link>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

@@ -16,15 +16,19 @@ import { useForm, type FieldValues, type SubmitHandler } from "react-hook-form";
 import { Link, useNavigate } from "react-router";
 import { toast } from "sonner";
 
-
 export function LoginForm({
   className,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) {
-  const form = useForm();
+  const form = useForm({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
   const navigate = useNavigate();
   const [login] = useLoginMutation();
-  
+
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     const toastId = toast.loading("Logging in...");
     try {
@@ -33,7 +37,7 @@ export function LoginForm({
         password: data.password,
       };
       const res = await login(credentials).unwrap();
-      
+
       if (res?.success) {
         toast.success("Logged in successfully!", { id: toastId });
         navigate("/");
@@ -73,6 +77,7 @@ export function LoginForm({
                   <FormLabel>Email</FormLabel>
                   <FormControl>
                     <Input
+                      type="email"
                       placeholder="john@example.com"
                       {...field}
                       value={field.value || ""}
